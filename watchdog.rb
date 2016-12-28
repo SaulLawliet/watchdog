@@ -8,9 +8,12 @@ RULES = "rules"
 
 Dir.mkdir(TMP) unless File::directory?(TMP)
 
+$load_success = true
+
 $rules = {}
 def rule(id, name, url, css, before_send)
   if $rules.key?(id.to_sym)
+    $load_success = false
     puts " - !!! Duplicate id: [#{id}]"
   else
     $rules[id.to_sym] = {
@@ -31,6 +34,7 @@ def subscribe(email, rule_id_list)
       $rules[rule_id.to_sym][:observers] << email
       puts "    - add [#{rule_id}]."
     else
+      $load_success = false
       puts "    - wrong [#{rule_id}].   (Legal rules: #{$rules.keys})"
     end
   end
@@ -44,7 +48,11 @@ puts ""
 puts "Load subscriptions..."
 load(File.open("emails.rb"))
 puts "Load subscriptions success."
-exit
+
+unless $load_success
+  puts ""
+  puts "FOUNT ERROR. Abort."
+end
 
 $rules.each do |k, v|
   next if v[:observers].empty?
