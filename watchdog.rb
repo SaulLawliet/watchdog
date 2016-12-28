@@ -52,6 +52,7 @@ puts "Load subscriptions success."
 unless $load_success
   puts ""
   puts "FOUNT ERROR. Abort."
+  exit
 end
 
 $rules.each do |k, v|
