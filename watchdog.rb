@@ -9,43 +9,52 @@ RULES = "rules"
 
 Dir.mkdir(TMP) unless File::directory?(TMP)
 
+$load_success = true
 $rules = {}
+
 puts "Load rules..."
 Dir.glob("#{RULES}/*.yaml").each do |file|
-  data =  YAML.load_file(file)
   id = file[RULES.size+1 ... file.size-5].to_sym # 5 means ".yaml".size
-  $rules[id] = data.inject({}){|memo, (k,v)| memo[k.to_sym] = v; memo}.merge({:observers => []})
-  puts " - [#{id}]"
+  data =  YAML.load_file(file)
+  error = false
+  ["name", "url", "css_selectors"].each do |key|
+    if data[key].nil? || data[key].empty?
+      $load_success = false
+      error = true
+      puts "  - [#{id}] FAILURE. '#{key}' not config."
+    end
+  end
+  unless error
+    $rules[id] = data.inject({}){|memo, (k,v)| memo[k.to_sym] = v; memo}.merge({:observers => []})
+    puts "  - [#{id}] success."
+  end
 end
-puts "Load rules success."
+puts ""
+
+puts "Load users..."
+data = YAML.load_file("users.yaml")
+if data.is_a?(Array)
+  data.each do |user|
+    email = user["email"]
+    puts "  - for user: #{email}"
+    user["following"].each do |rule_id|
+      if $rules.key?(rule_id.to_sym)
+        $rules[rule_id.to_sym][:observers] << email
+        puts "    - [#{rule_id}] success."
+      else
+        $load_success = false
+        puts "    - [#{rule_id}] FAILURE. (Legal rules: #{$rules.keys})"
+      end
+    end
+  end
+else
+  puts "  - FAILURE. no users."
+  $load_success = false
+end
 puts ""
 
 
-$load_success = true
-puts "Load users..."
-data = YAML.load_file("users.yaml")
-unless data.is_a?(Array)
-  puts "ERROR. please check users.yaml"
-  exit
-end
-data.each do |user|
-  email = user["email"]
-  puts "  - for user: #{email}"
-  user["following"].each do |rule_id|
-    if $rules.key?(rule_id.to_sym)
-      $rules[rule_id.to_sym][:observers] << email
-      puts "    - [#{rule_id}] success."
-    else
-      $load_success = false
-      puts "    - [#{rule_id}] FAUILURE.   (Legal rules: #{$rules.keys})"
-    end
-  end
-end
-puts "Load users success."
-
-
 unless $load_success
-  puts ""
   puts "FOUNT ERROR. Abort."
   exit
 end
@@ -78,7 +87,7 @@ $rules.each do |k, v|
   file_name = File.join(TMP, k.to_s)
 
   old = File.read(file_name) if File.exist?(file_name)
-  new = Nokogiri::HTML(open(v[:url]).read).css(v[:css])
+  new = Nokogiri::HTML(open(v[:url]).read).css(v[:css_selectors])
 
   if new.to_s != old
     # save to tmp file
