@@ -1,3 +1,3 @@
-name: "图灵每周半价电子书"
+name: "图灵电子书每周半价"
 url: "http://www.ituring.com.cn/"
 css_selectors: ".eve-list dl:nth-child(1) dd"

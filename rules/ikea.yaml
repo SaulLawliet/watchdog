@@ -1,3 +1,3 @@
-name: "宜家每周优惠商品"
+name: "宜家每周限时特惠"
 url: "http://www.ikea.com/cn/zh/"
 css_selectors: "#whysection a img"
