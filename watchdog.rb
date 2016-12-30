@@ -29,9 +29,8 @@ Dir.glob("#{RULES}/*.yaml").each do |file|
     puts "  - [#{id}] success."
   end
 end
-puts ""
 
-puts "Load users..."
+puts "\nLoad users..."
 data = YAML.load_file("users.yaml")
 if data.is_a?(Array)
   data.each do |user|
@@ -51,63 +50,74 @@ else
   puts "  - FAILURE. no users."
   $load_success = false
 end
-puts ""
 
 
 unless $load_success
-  puts "FOUNT ERROR. Abort."
+  puts "\nFOUNT ERROR. Abort."
   exit
 end
 
 
 def modify_relative_link(scheme, host, attr)
-  unless attr.value.match(/^\/\/[^\/]+/).nil?
-    attr.value = "#{scheme}:#{attr.value}"
-  end
-  unless attr.value.match(/^\/[^\/]+/).nil?
-    attr.value = "#{scheme}://#{host}#{attr.value}"
-  end
-end
-
-def loop_element(scheme, host, node_set)
-  node_set.children.each do |element|
-    case element.name
-    when "img"
-      modify_relative_link(scheme, host, element.attributes["src"])
-    when "a"
-      modify_relative_link(scheme, host, element.attributes["href"])
+  if attr.value[0] == '/'
+    if attr.value[1] == '/'
+      attr.value = "#{scheme}:#{attr.value}"
+    else
+      attr.value = "#{scheme}://#{host}#{attr.value}"
     end
-    loop_element(scheme, host, element) if element.is_a?(Nokogiri::XML::Element)
   end
 end
 
+def loop_element(scheme, host, element)
+  itself = element.itself
+  case itself.name
+  when "img"
+    modify_relative_link(scheme, host, itself.attributes["src"])
+  when "a"
+    modify_relative_link(scheme, host, itself.attributes["href"])
+  end
+
+  element.children.each do |child|
+    loop_element(scheme, host, child) if element.is_a?(Nokogiri::XML::Element)
+  end
+end
+
+puts "\nCheck for updates..."
 $rules.each do |k, v|
-  next if v[:observers].empty?
+  print "  - check [#{k}]."
+  if v[:observers].empty?
+    puts " SKIP <no followers>."
+    next
+  end
 
   file_name = File.join(TMP, k.to_s)
 
   old = File.read(file_name) if File.exist?(file_name)
   new = Nokogiri::HTML(open(v[:url]).read).css(v[:css_selectors])
 
-  if new.to_s != old
-    # save to tmp file
-    File.open(file_name, "w") do |file|
-      file.print new.to_s
-    end
+  if new.to_s == old
+    puts " SKIP <no updates>."
+    next
+  end
 
-    # handle relative path
-    uri = URI(v[:url])
-    loop_element(uri.scheme, uri.host, new)
+  puts " FOUND."
+  # save to tmp file
+  File.open(file_name, "w") do |file|
+    file.print new.to_s
+  end
 
-    # notify
-    v[:observers].each do |to|
-      Pony.mail(:to => to,
-                :subject => "[订阅]#{v[:name]}",
-                :html_body => "<html>#{new}</html>",
-                :from => 'noreply@example.com', # you might change
-                :via => :sendmail               # you might change
-               )
-    end
+  # handle relative path
+  uri = URI(v[:url])
+  new.each {|element| loop_element(uri.scheme, uri.host, element)}
+
+  # notify
+  v[:observers].each do |to|
+    puts "    - send mail to <#{to}>"
+    Pony.mail(:to => to,
+              :subject => "[订阅]#{v[:name]}",
+              :html_body => "<html>#{new}</html>",
+              :from => 'noreply@example.com', # you might change
+              :via => :sendmail               # you might change
+             )
   end
 end
-
