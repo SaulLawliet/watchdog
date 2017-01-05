@@ -1,5 +1,5 @@
 # example:
-#  - email: "user@example"
+#  - email: "user@example.com"
 #    following: ["ituring", "ikea"]
-#  - email: "user2@example"
+#  - email: "user2@example.com"
 #    following: ["ikea"]
