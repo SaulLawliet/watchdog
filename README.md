@@ -5,7 +5,7 @@ IF (网页某区域有变化) THEN (邮件提醒你)
 1. 规则: 放在`rules`目录下, 文件名要以`.yaml`结尾, 格式如下
   ```
   # file: rules/ituring.yaml
-  name: "图灵电子书每周半价"                      # 邮件标题
+  name: "图灵电子书每周半价"                          # 邮件标题
   url: "http://www.ituring.com.cn/"               # 抓取的页面
   css_selectors: ".eve-list dl:nth-child(1) dd"   # 抓取的节点
   ```
