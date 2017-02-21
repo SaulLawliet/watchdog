@@ -82,6 +82,8 @@ def loop_element(scheme, host, element)
   end
 end
 
+UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36"
+
 puts "\nCheck for updates..."
 $rules.each do |k, v|
   print "  - check [#{k}]."
@@ -93,7 +95,7 @@ $rules.each do |k, v|
   file_name = File.join(TMP, k.to_s)
 
   old = File.read(file_name) if File.exist?(file_name)
-  new = Nokogiri::HTML(open(v[:url]).read).css(v[:css_selectors])
+  new = Nokogiri::HTML(open(v[:url], {"User-Agent" => UA}).read).css(v[:css_selectors])
 
   if new.to_s == old
     puts " SKIP <no updates>."
@@ -110,6 +112,7 @@ $rules.each do |k, v|
   uri = URI(v[:url])
   new.each {|element| loop_element(uri.scheme, uri.host, element)}
 
+pass
   # notify
   v[:observers].each do |to|
     puts "    - send mail to <#{to}>"
