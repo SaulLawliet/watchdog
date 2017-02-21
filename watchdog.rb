@@ -112,7 +112,6 @@ $rules.each do |k, v|
   uri = URI(v[:url])
   new.each {|element| loop_element(uri.scheme, uri.host, element)}
 
-pass
   # notify
   v[:observers].each do |to|
     puts "    - send mail to <#{to}>"
