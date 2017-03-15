@@ -1,6 +1,9 @@
 # Watchdog
 IF (网页某区域有变化) THEN (邮件提醒你)
 
+# 邮件截图
+<img src="screenshots/ituring.png" width="400px" /> <img src="screenshots/ikea.png" width="400px" />
+
 # 如何配置
 1. 规则: 放在`rules`目录下, 文件名要以`.yaml`结尾, 格式如下
   ```
