@@ -11,8 +11,8 @@ IF (网页某区域有变化) THEN (邮件提醒你)
   name: "图灵电子书每周半价"                         # 邮件标题
   url: "http://www.ituring.com.cn/"               # 抓取的页面
   css_selectors: ".eve-list dl:nth-child(1) dd"   # 抓取的节点
-  cron: "0 10 * * * "                             # 抓取的时间, 规则跟 crontab 一样
-  ```
+  cron: "0 10 * * *"                             # 抓取的时间, 规则跟 crontab 一样
+  ```
   对于 `css_selectors` 如何食用, 请搭配
   [SelectorGadget](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb).
 
