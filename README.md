@@ -11,7 +11,8 @@ IF (网页某区域有变化) THEN (邮件提醒你)
   name: "图灵电子书每周半价"                         # 邮件标题
   url: "http://www.ituring.com.cn/"               # 抓取的页面
   css_selectors: ".eve-list dl:nth-child(1) dd"   # 抓取的节点
-  ```
+  cron: "0 10 * * * "                             # 抓取的时间, 规则跟 crontab 一样
+  ```
   对于 `css_selectors` 如何食用, 请搭配
   [SelectorGadget](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb).
 
@@ -30,10 +31,7 @@ IF (网页某区域有变化) THEN (邮件提醒你)
 ```
 git clone https://github.com/SaulLawliet/watchdog.git
 cd watchdog
-ruby watchdog.rb
+# 添加规则, 修改用户信息, 更改发送邮件方式
+ruby watchdog.rb &
 ```
-推荐加入到定时任务里
-```
-# 每天10点执行
-0 10 * * * cd /path/to/watchdog && /path/to/ruby-x.x.x/wrappers/ruby watchdog.rb
-```
+
