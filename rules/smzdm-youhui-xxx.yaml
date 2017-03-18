@@ -1,0 +1,4 @@
+name: "什么值得买 优惠 - xxx"
+url: "http://search.smzdm.com/?c=youhui&s=xxx" # 需要 UrlEncode
+css_selectors: ".feed-block-title"
+cron: "3 * * * *"
