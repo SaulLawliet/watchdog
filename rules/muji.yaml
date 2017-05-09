@@ -1,0 +1,4 @@
+name: "MUJI 季节商品特惠"
+url: "http://www.muji.com.cn/cn/store/feature/sale/"
+css_selectors: ".itemList ul"
+cron: "0 10 * * *"
