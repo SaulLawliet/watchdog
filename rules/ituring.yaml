@@ -1,4 +1,4 @@
-name: "图灵电子书每周半价"
+name: "图灵社区动态"
 url: "http://www.ituring.com.cn/"
 css_selectors: "dl:nth-child(1)"
-cron: "0 10 * * *"
+cron: "0 */3 * * *"
