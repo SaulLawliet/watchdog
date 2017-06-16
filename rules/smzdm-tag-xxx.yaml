@@ -1,0 +1,4 @@
+name: "什么值得买 TAG - xxx"
+url: "http://www.smzdm.com/youhui/tag/xxx/" # 需要 UrlEncode
+css_selectors: ".listTitle .itemName"
+cron: "3 * * * *"
