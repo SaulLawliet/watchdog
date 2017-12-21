@@ -1,0 +1,31 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    colorize (0.8.1)
+    et-orbi (1.0.8)
+      tzinfo
+    mail (2.7.0)
+      mini_mime (>= 0.1.1)
+    mini_mime (1.0.0)
+    mini_portile2 (2.3.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
+    pony (1.11)
+      mail (>= 2.0)
+    rufus-scheduler (3.4.2)
+      et-orbi (~> 1.0)
+    thread_safe (0.3.6)
+    tzinfo (1.2.4)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colorize
+  nokogiri
+  pony
+  rufus-scheduler
+
+BUNDLED WITH
+   1.14.6

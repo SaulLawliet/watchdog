@@ -1,11 +1,12 @@
 # coding: utf-8
 require "open-uri"
+require "yaml"
+require "logger"
+
 require "nokogiri"
 require "pony"
-require "yaml"
 require "colorize"
 require "rufus-scheduler"
-
 
 class Watchdog
   class << self
