@@ -1,5 +1,0 @@
-# 请将xxx替换为你要关注的用户ID
-name: "什么值得买 原创 - 某某某"
-url: "http://zhiyou.smzdm.com/member/xxx/post/"
-css_selectors: ".pandect-content-title"
-cron: "0 10 * * *"

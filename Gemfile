@@ -1,6 +1,6 @@
 source :rubygems
 
 gem 'nokogiri'
-gem 'pony'
+gem 'pony', 1.1
 gem 'colorize'
 gem 'rufus-scheduler'

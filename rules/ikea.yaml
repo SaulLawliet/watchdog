@@ -1,4 +1,0 @@
-name: "宜家每周限时特惠"
-url: "http://www.ikea.com/cn/zh/"
-css_selectors: "#whysection a img"
-cron: "0 10 * * *"
