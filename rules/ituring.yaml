@@ -1,3 +1,3 @@
-name: "图灵社区动态"
-url: "http://www.ituring.com.cn/"
-css_selectors: "dl:nth-child(1)"
+name: "图灵社区-每周特价"
+url: "https://www.ituring.com.cn/tag/36527"
+css_selectors: ".book-img"
