@@ -1,6 +1,6 @@
-source :rubygems
+source "https://rubygems.org"
 
-gem 'nokogiri'
-gem 'pony', 1.1
-gem 'colorize'
-gem 'rufus-scheduler'
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
+# Specify your gem's dependencies in watchdog.gemspec
+gemspec

@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+
+if system 'rake spec'
+  puts "======================"
+  puts "通过测试, 开始启动服务"
+  puts "======================"
+  puts
+
+  require "watchdog"
+  Watchdog::Following.start_scheduler
+end

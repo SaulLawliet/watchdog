@@ -14,7 +14,7 @@ IF (网页某区域有变化) THEN (邮件提醒你)
     ```
     对于 `css_selectors` 如何食用, 请搭配
     [SelectorGadget](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb).
-  
+
 1. 其他: 详情见 [config.yaml](config.yaml)
 
 # 获取并执行

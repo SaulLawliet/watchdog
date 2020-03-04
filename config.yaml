@@ -1,26 +1,42 @@
-mail:
-  from: "noreply@example.com"
-  to: "" # "you@example.com"
-  subject-prefix: "[订阅]" # 邮件标题前缀
-  via: "sendmail" # sendmail/smtp 邮件详情参考: https://github.com/benprew/pony
-  smtp-options:
-    address: "" # "smtp.yourserver.com"
-    port: "" # "25"
-    user_name: "" # "user"
-    password: "" # "password"
-    domain: "" # "localhost.localdomain"
+sender: "mail" # 发送方式, 暂时只支持邮件
+test_sender: true # 单元测试, 是否测试发送功能
 
-proxy: "" # "https://127.0.0.1:8888"
+mail:
+  from: "noreply@example.com" # noreply@example.com
+  subject_prefix: "[订阅]" # 邮件标题前缀
+  via: "TODO" # sendmail/smtp 邮件详情参考: https://github.com/benprew/pony
+  smtp_options:
+    address: "TODO" # "smtp.yourserver.com"
+    port: "25" # "25"
+    enable_starttls_auto: false # 启用 SSL
+    user_name: "TODO" # "user@localhost.localdomain"
+    password: "TODO" # "password"
+    authentication: "plain" # :plain, :login, :cram_md5, no auth by default
+    domain: "TODO" # "localhost.localdomain"
+
+proxy: "" # 代理地址 "http://127.0.0.1:8888"
+
+users:
+  - name: user1
+    address: user1@example.com
+
+  - name: user2
+    address: user2@example.com
 
 # rule:       [必选] 规则文件名
 # cron:       [必选] 定时任务 (写法同 crontab)
+# followers:   [必选] 数组: 对应 users 的 name
 # proxy:      [可选] 是否使用代理 (true/false)
-# param-name: [可选] 标题中的参数
+# param_name: [可选] 标题中的参数
 # param-url:  [可选] URL中的参数
-following:
+followings:
   - rule: "ituring"
-    cron: "0 10 * * *"
+    cron: "*/10 * * * *"
+    followers: ["user1", "user2"]
+
   - rule: "smzdm-tag-x"
     cron: "0 */3 * * *"
-    param-name: "绝对值"
-    param-url: "绝对值"
+    followers: ["user1"]
+    proxy: false
+    param_name: "绝对值"
+    param_url: "绝对值"
