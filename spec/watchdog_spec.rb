@@ -13,7 +13,13 @@ RSpec.describe Watchdog do
         if via != :TODO
           expect(File.executable?("/usr/sbin/sendmail")).to eq(true) if via == :sendmail
 
-          Watchdog::Sender.send("noreply@example.com", "Hello", "<html><h1>Hello world.</h1></html>")
+          address = "noreply@example.com"
+          data = Watchdog::User.get_users.first
+          unless data.nil?
+            address = data[1].address
+          end
+
+          Watchdog::Sender.send(address, "Hello", "<html><h1>Hello world.</h1></html>")
         end
       end
     end
