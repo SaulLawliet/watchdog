@@ -7,6 +7,7 @@ require "watchdog/sender"
 require "watchdog/user"
 
 require 'find'
+require 'logger'
 require 'nokogiri'
 require 'open-uri'
 require 'ostruct'
@@ -20,6 +21,9 @@ module Watchdog
   # 配置目录
   DIR_DATA = "data"
   DIR_RULES = "rules"
+
+  CHECK_LOGGER = Logger.new("check.log")
+  CHECK_LOGGER.datetime_format = "%Y-%m-%d %H:%M:%S"
 
   Dir.mkdir(DIR_DATA) unless File::directory?(DIR_DATA)
 

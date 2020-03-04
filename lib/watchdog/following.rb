@@ -41,7 +41,7 @@ module Watchdog
         @@followings.each do |id, following|
           if following.followers.length > 0
             scheduler.cron following.cron do
-              check(id)
+              check_update(id)
             end
           end
         end
@@ -55,10 +55,11 @@ module Watchdog
         file_name = File.join(DIR_DATA, id)
         old = File.read(file_name) if File.exist?(file_name)
         if body == old
-          # @@logger.info "[#{id}] No updates."
+          CHECK_LOGGER.info "[#{id}] No updates."
           return
         end
-        # @@logger.info "[#{id}] Found new."
+        CHECK_LOGGER.info "[#{id}] Found new."
+
         # save to tmp file
         File.open(file_name, "w") { |f| f << body}
 
