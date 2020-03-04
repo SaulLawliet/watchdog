@@ -20,9 +20,11 @@ css_selectors: ".book-img"                      # 抓取的节点
 |      rule      |     |           描述           |
 | -------------- | --- | :----------------------- |
 | ituring        |     | 图灵社区, 每周特价电子书 |
+| smzdm-fenlei-x |     | 什么值得买, 分类         |
 | smzdm-post-x   |     | 什么值得买, 用户发文     |
 | smzdm-tag-x    |     | 什么值得买, 标签关键字   |
 | smzdm-youhui-x |     | 什么值得买, 商品关键字   |
+| smzdm          |     | 什么值得买, 首页热门     |
 
 ## 修改配置 (config.yaml)
 
