@@ -41,11 +41,11 @@ module Watchdog
   class MailSender < Sender
 
     def load_config(config)
-      @options = config.transform_keys(&:to_sym)
+      @options = config.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
       @options[:via] = @options[:via].to_sym
       smtp_options = @options.delete(:smtp_options)
       if @options[:via] == :smtp
-       @options[:via_options] = smtp_options.transform_keys(&:to_sym)
+       @options[:via_options] = smtp_options.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
        @options[:via_options][:authentication] = @options[:via_options][:authentication].to_sym
       end
 
