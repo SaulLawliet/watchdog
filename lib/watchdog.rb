@@ -15,6 +15,8 @@ require 'rufus-scheduler'
 require 'yaml'
 
 module Watchdog
+  class Error < StandardError; end
+
   # 配置目录
   DIR_DATA = "data"
   DIR_RULES = "rules"

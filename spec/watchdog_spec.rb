@@ -1,5 +1,3 @@
-require 'open-uri'
-
 RSpec.describe Watchdog do
   it "has a version number" do
     expect(Watchdog::VERSION).not_to be nil
