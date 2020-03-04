@@ -28,7 +28,7 @@ users:
 # followers:   [必选] 数组: 对应 users 的 name
 # proxy:      [可选] 是否使用代理 (true/false)
 # param_name: [可选] 标题中的参数
-# param-url:  [可选] URL中的参数
+# param_url:  [可选] URL中的参数
 followings:
   - rule: "ituring"
     cron: "0 */6 * * *"
