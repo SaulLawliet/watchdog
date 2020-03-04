@@ -31,7 +31,7 @@ users:
 # param-url:  [可选] URL中的参数
 followings:
   - rule: "ituring"
-    cron: "*/10 * * * *"
+    cron: "0 */6 * * *"
     followers: ["user1", "user2"]
 
   - rule: "smzdm-tag-x"
