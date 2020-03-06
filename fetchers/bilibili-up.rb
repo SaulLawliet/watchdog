@@ -11,4 +11,4 @@ data["archive-view"] = space_upstat["data"]["archive"]["view"]
 data["article-view"] = space_upstat["data"]["article"]["view"]
 data["likes"] = space_upstat["data"]["likes"]
 
-data.to_json
+JSON.pretty_generate(data)
