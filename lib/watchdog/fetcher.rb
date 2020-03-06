@@ -65,11 +65,11 @@ module Watchdog
     end
 
     def get_name(options)
-      if options.nil?
-        nil
-      else
-        options.name
-      end
+      options.nil? ? nil : options.name
+    end
+
+    def get_id(options)
+      (options.nil? || options.name.nil?) ? @id : "#{@id}(#{options.name})"
     end
 
   end
@@ -82,11 +82,11 @@ module Watchdog
     end
 
     def get_name(options)
-      options.nil? ?  data.name : data.name % options.param_name
+      options.nil? ? data.name : data.name % options.param_name
     end
 
     def get_id(options)
-      options.nil? ?  @id : "#{@id}(#{options.param_name})"
+      (options.nil? || options.param_name.nil?) ? @id : "#{@id}(#{options.param_name})"
     end
 
     def fetch(options)

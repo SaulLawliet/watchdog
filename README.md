@@ -10,6 +10,11 @@ IF (网页某区域有变化) THEN (提醒你)
 
 文件名以`.rb`结尾, 实现方式是定义一个函数, 函数内容是该脚本, 支持传递配置参数.
 
+已有规则:
+|   fetcher   |     |             描述              |
+| ----------- | --- | :---------------------------- |
+| bilibili-up |     | B站UP主, 当前粉丝数, 获赞数等 |
+
 ### CSS Selectors 监控
 
 文件名以`.yaml`结尾.
@@ -25,7 +30,7 @@ css_selectors: ".book-img"                      # 抓取的节点
 [SelectorGadget](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb).
 
 已有规则:
-|      rule      |     |           描述           |
+|    fetcher     |     |           描述           |
 | -------------- | --- | :----------------------- |
 | ituring        |     | 图灵社区, 每周特价电子书 |
 | smzdm-fenlei-x |     | 什么值得买, 分类         |
