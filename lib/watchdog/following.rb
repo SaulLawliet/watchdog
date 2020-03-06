@@ -4,17 +4,16 @@ module Watchdog
       @@followings = {}
 
       def initialize
-        followings = Config.get["followings"]
+        followings = CONFIG["followings"]
         unless followings.nil?
           followings.each do |following|
             struct = OpenStruct.new(following)
 
-            if struct.param_name.nil?
-              id = struct.rule
-            else
-              id = "#{struct.rule}(#{struct.param_name})"
+            unless struct.options.nil?
+              struct.options = OpenStruct.new(struct.options)
             end
 
+            id = Fetcher.get_fetcher(struct.fetcher).get_id(struct.options)
             @@followings[id] = struct
           end
         end
@@ -38,10 +37,10 @@ module Watchdog
       def start_scheduler
         scheduler = Rufus::Scheduler.new
 
-        @@followings.each do |id, following|
+        @@followings.each do |following_id, following|
           if following.followers.length > 0
             scheduler.cron following.cron do
-              check_update(id)
+              check_update(following_id)
             end
           end
         end
@@ -49,28 +48,28 @@ module Watchdog
         scheduler.join
       end
 
-      def check_update(id)
-        body = Fetch.fetch(id).to_s
+      def check_update(following_id)
+        following = get_following(following_id)
+        fetcher = Fetcher.get_fetcher(following.fetcher)
 
-        file_name = File.join(DIR_DATA, id)
+        body = fetcher.fetch(following.options)
+
+        file_name = File.join(DIR_DATA, following_id)
         old = File.read(file_name) if File.exist?(file_name)
         if body == old
-          CHECK_LOGGER.info "[#{id}] No updates."
+          CHECK_LOGGER.info "[#{following_id}] No updates."
           return
         end
-        CHECK_LOGGER.info "[#{id}] Found new."
+        CHECK_LOGGER.info "[#{following_id}] Found new."
 
         # save to tmp file
         File.open(file_name, "w") { |f| f << body}
 
-        following = Following.get_following(id)
-        rule = Rule.get_rule(following.rule)
+        subject = fetcher.get_name(following.options)
 
-        subject = rule.name % following.param_name
-        html_body = "<html>#{body}</html>"
         following.followers.each do |name|
           user = User.get_user(name)
-          Sender.send(user.address, subject, html_body)
+          Sender.send(user.address, subject, body)
         end
       end
 

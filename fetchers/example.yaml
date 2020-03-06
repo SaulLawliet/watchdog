@@ -1,0 +1,4 @@
+# 该文件用来单元测试
+name: "<html><h1>Example Domain</h1></html>"
+url: "https://example.com/"
+css_selectors: "h1"

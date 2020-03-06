@@ -23,20 +23,27 @@ users:
   - name: user2
     address: user2@example.com
 
-# rule:       [必选] 规则文件名
+# fetcher:    [必选] 抓取器文件名(无后缀)
 # cron:       [必选] 定时任务 (写法同 crontab)
-# followers:   [必选] 数组: 对应 users 的 name
-# proxy:      [可选] 是否使用代理 (true/false)
-# param_name: [可选] 标题中的参数
-# param_url:  [可选] URL中的参数
+# followers:  [必选] 数组: 对应 users 的 name
+# options:    [可选] 抓取器的额外参数
+#
+# 对于 css_selectors, 后缀是 yaml 的额外参数
+#    proxy:      [可选] 是否使用代理 (true/false)
+#    param_name: [可选] 标题中的参数
+#    param_url:  [可选] URL中的参数
+#
+# 对于 ruby 脚本, 后缀是 rb 的额外参数, 具体看脚本的注释
+#
 followings:
-  - rule: "ituring"
+  - fetcher: "ituring"
     cron: "0 */6 * * *"
     followers: ["user1", "user2"]
 
-  - rule: "smzdm-tag-x"
+  - fetcher: "smzdm-tag-x"
     cron: "0 */3 * * *"
     followers: ["user1"]
-    proxy: false
-    param_name: "绝对值"
-    param_url: "绝对值"
+    options:
+      proxy: false
+      param_name: "绝对值"
+      param_url: "绝对值"

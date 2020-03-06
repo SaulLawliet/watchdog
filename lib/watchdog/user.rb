@@ -5,9 +5,9 @@ module Watchdog
       @@users = {}
 
       def initialize
-        users = Config.get["users"]
+        users = CONFIG["users"]
         unless users.nil?
-          Config.get["users"].each do |user|
+          users.each do |user|
             struct = OpenStruct.new(user)
             @@users[struct.name] = struct
           end
