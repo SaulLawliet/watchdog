@@ -64,12 +64,12 @@ module Watchdog
       instance_eval("def fetch(options); #{File.read(filename)}; end")
     end
 
-    def get_name(options)
-      options.nil? ? nil : options.name
-    end
-
     def get_id(options)
       (options.nil? || options.name.nil?) ? @id : "#{@id}(#{options.name})"
+    end
+
+    def get_name(options)
+      get_id(options)
     end
 
   end

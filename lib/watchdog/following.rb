@@ -13,8 +13,10 @@ module Watchdog
               struct.options = OpenStruct.new(struct.options)
             end
 
-            id = Fetcher.get_fetcher(struct.fetcher).get_id(struct.options)
-            @@followings[id] = struct
+            fetcher = Fetcher.get_fetcher(struct.fetcher)
+            raise "不存在的 fetcher #{struct.fetcher}" if fetcher.nil?
+
+            @@followings[fetcher.get_id(struct.options)] = struct
           end
         end
         show
