@@ -4,10 +4,18 @@ IF (网页某区域有变化) THEN (提醒你)
 
 ## 编写规则
 
-暂时只支持一种监控方式, 即`css_selectors`. 配置文件放在`rules`目录下, 文件名要以`.yaml`结尾.
+配置文件放在`fetchers`目录下
+
+### Ruby 脚本监控
+
+文件名以`.rb`结尾, 实现方式是定义一个函数, 函数内容是该脚本, 支持传递配置参数.
+
+### CSS Selectors 监控
+
+文件名以`.yaml`结尾.
 
 ``` yaml
-# file: rules/ituring.yaml
+# file: fetchers/ituring.yaml
 name: "图灵社区 - 每周特价"                        # 邮件标题(%s表示通配符)
 url: "https://www.ituring.com.cn/tag/36527"     # 抓取的页面(%s表示通配符)
 css_selectors: ".book-img"                      # 抓取的节点
