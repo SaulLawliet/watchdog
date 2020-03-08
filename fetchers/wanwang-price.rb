@@ -45,4 +45,4 @@ json["model"].each do |model|
   }
 end
 
-puts JSON.pretty_generate(data)
+JSON.pretty_generate(data)
