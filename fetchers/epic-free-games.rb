@@ -16,16 +16,27 @@ json = JSON.parse(response.body)
 
 data = []
 json["data"]["Catalog"]["catalogOffers"]["elements"].each do |element|
-  promotions = element["promotions"]
-  promotionalOffers = promotions["promotionalOffers"].empty? ? promotions["upcomingPromotionalOffers"] : promotions["promotionalOffers"]
-  promotionalOffer = promotionalOffers[0]["promotionalOffers"][0]
-
-  data << {
+  product = {
     "title" => element["title"],
-    "url" => "https://www.epicgames.com/store/product/" + element["productSlug"],
-    "startDate" => promotionalOffer["startDate"],
-    "endDate" => promotionalOffer["endDate"]
+    "url" => "https://www.epicgames.com/store/product/" + element["productSlug"]
   }
+
+  promotions = element["promotions"]
+  unless promotions.nil?
+    unless promotions["promotionalOffers"].empty?
+      promotionalOffer = promotions["promotionalOffers"][0]["promotionalOffers"][0]
+    end
+    unless promotions["upcomingPromotionalOffers"].empty?
+      promotionalOffer = promotions["upcomingPromotionalOffers"][0]["promotionalOffers"][0]
+    end
+  end
+
+  unless promotionalOffer.nil?
+    product["startDate"] = promotionalOffer["startDate"]
+    product["endDate"] = promotionalOffer["endDate"]
+  end
+
+  data << product
 end
 
 JSON.pretty_generate(data)
