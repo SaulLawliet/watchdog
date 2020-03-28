@@ -30,7 +30,6 @@ json["data"]["Catalog"]["catalogOffers"]["elements"].each do |element|
       end
     end
   end
-
 end
 
 JSON.pretty_generate(data)
