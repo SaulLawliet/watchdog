@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'json'
 
 cmd = "python tools/cloudflare-scrape.py https://steamdb.info/upcoming/free/"
+cmd.haha
 unless options.nil? || options.proxy.nil?
   cmd += " #{options.proxy}"
 end
@@ -27,7 +28,7 @@ doc.css(".text-left:nth-child(3) .applogo, .text-left:nth-child(3) .applogo +td"
   name = td.css("b")[0].text.split("Limited Free Promo")
   if name.length > 1
     data << {
-      "name" => name[0].delete_suffix("[").strip,
+      "name" => name[0][0..-2].strip, # 先移除最后一个字符, 再 strip
       "link" => lastLink.split("?")[0]
     }
   end
