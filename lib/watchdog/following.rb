@@ -59,7 +59,8 @@ module Watchdog
           body = fetcher.fetch(following.options)
         rescue Exception => e
           status = false
-          body = e.full_message
+          # body = e.full_message # from ruby 2.5
+          body = e.message
         end
 
         if status
