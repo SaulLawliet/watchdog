@@ -5,7 +5,6 @@ require 'nokogiri'
 require 'json'
 
 cmd = "python tools/cloudflare-scrape.py https://steamdb.info/upcoming/free/"
-cmd.haha
 unless options.nil? || options.proxy.nil?
   cmd += " #{options.proxy}"
 end
