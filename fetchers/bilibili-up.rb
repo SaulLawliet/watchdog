@@ -8,8 +8,9 @@ space_upstat = JSON.parse(open("https://api.bilibili.com/x/space/upstat?mid=#{op
 
 data = relation_stat["data"]
 data.delete("following")
-data["archive-view"] = space_upstat["data"]["archive"]["view"]
-data["article-view"] = space_upstat["data"]["article"]["view"]
+# 由于播放量和阅读量是日更, 所以不关心
+# data["archive-view"] = space_upstat["data"]["archive"]["view"]
+# data["article-view"] = space_upstat["data"]["article"]["view"]
 data["likes"] = space_upstat["data"]["likes"]
 
 JSON.pretty_generate(data)
