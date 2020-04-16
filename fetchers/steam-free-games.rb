@@ -1,27 +1,36 @@
+# 依赖: tools/cloudflare-scrape.py
+# proxy: 代理地址
+
 require 'nokogiri'
-require 'open-uri'
 require 'json'
 
-ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36"
-cookie = "cf_clearance=9edcbdf290fe4a4b26aff3ab5fadaacb619b043b-1585386602-0-150; __cfduid=db71608fdc4de0f28e386b9f875342a7b1585386602;"
-doc = Nokogiri::HTML(open("https://steamdb.info/upcoming/free/", "User-Agent" => ua, "Cookie" => cookie))
+cmd = "python tools/cloudflare-scrape.py https://steamdb.info/upcoming/free/"
+unless options.nil? || options.proxy.nil?
+  cmd += " #{options.proxy}"
+end
+doc = Nokogiri::HTML(`#{cmd}`)
 
 data = []
 lastLink = ""
 doc.css(".text-left:nth-child(3) .applogo, .text-left:nth-child(3) .applogo +td").each do |td|
   if td["class"] == "applogo"
-    lastLink = td.css("a")[0]["href"]
+    a = td.css("a")[0]
+    unless a.nil?
+      lastLink = a["href"]
+    end
     next
   end
 
-  name = td.text.strip.split(" Limited Free Promotional")
+  # 标题格式暂时发现以下两种:
+  # Drawful 2 Limited Free Promotional Package - Mar 2020
+  # Welcome Back To 2007 2 [Limited Free Promo]
+  name = td.css("b")[0].text.split("Limited Free Promo")
   if name.length > 1
     data << {
-      "name" => name[0],
+      "name" => name[0][0..-2].strip, # 先移除最后一个字符, 再 strip
       "link" => lastLink.split("?")[0]
     }
   end
 end
 
 JSON.pretty_generate(data)
-

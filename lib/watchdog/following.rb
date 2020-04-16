@@ -54,18 +54,27 @@ module Watchdog
         following = get_following(following_id)
         fetcher = Fetcher.get_fetcher(following.fetcher)
 
-        body = fetcher.fetch(following.options)
-
-        file_name = File.join(DIR_DATA, following_id)
-        old = File.read(file_name) if File.exist?(file_name)
-        if body == old
-          CHECK_LOGGER.info "[#{following_id}] No updates."
-          return
+        status = true
+        begin
+          body = fetcher.fetch(following.options)
+        rescue Exception => e
+          status = false
+          # body = e.full_message # from ruby 2.5
+          body = e.message
         end
-        CHECK_LOGGER.info "[#{following_id}] Found new."
 
-        # save to tmp file
-        File.open(file_name, "w") { |f| f << body}
+        if status
+          file_name = File.join(DIR_DATA, following_id)
+          old = File.read(file_name) if File.exist?(file_name)
+          if body == old
+            CHECK_LOGGER.info "[#{following_id}] No updates."
+            return
+          end
+          CHECK_LOGGER.info "[#{following_id}] Found new."
+
+          # save to tmp file
+          File.open(file_name, "w") { |f| f << body}
+        end
 
         subject = fetcher.get_name(following.options)
 
