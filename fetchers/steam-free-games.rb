@@ -22,7 +22,7 @@ doc.css("table")[0].css("tbody tr").each do |tr|
   next unless tr.css("td")[3].text.end_with?("Keep")
 
   if data.class == String
-    data += tr.css("b")[0].text.strip + tr.css(".applogo a").to_s
+    data += tr.css(".applogo a").to_s + tr.css("b")[0].to_s + "<br>"
   else
     data << {
       "name" => tr.css("b")[0].text.strip,
