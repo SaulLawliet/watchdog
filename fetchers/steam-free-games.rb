@@ -1,34 +1,22 @@
 # 依赖: tools/cloudflare-scrape.py
+# pip3 install cfscrape
 # proxy: 代理地址
 
 require 'nokogiri'
 require 'json'
 
-cmd = "python tools/cloudflare-scrape.py https://steamdb.info/upcoming/free/"
-unless options.nil? || options.proxy.nil?
-  cmd += " #{options.proxy}"
-end
+cmd = "python3 tools/cloudflare-scrape.py https://steamdb.info/upcoming/free/"
+# unless options.nil? || options.proxy.nil?
+#   cmd += " #{options.proxy}"
+# end
 doc = Nokogiri::HTML(`#{cmd}`)
 
 data = []
-lastLink = ""
-doc.css(".text-left:nth-child(3) .applogo, .text-left:nth-child(3) .applogo +td").each do |td|
-  if td["class"] == "applogo"
-    a = td.css("a")[0]
-    unless a.nil?
-      lastLink = a["href"]
-    end
-    next
-  end
-
-  # 标题格式暂时发现以下两种:
-  # Drawful 2 Limited Free Promotional Package - Mar 2020
-  # Welcome Back To 2007 2 [Limited Free Promo]
-  name = td.css("b")[0].text.split("Limited Free Promo")
-  if name.length > 1
+doc.css("table")[0].css("tbody tr").each do |tr|
+  if tr.css("td")[3].text.end_with?("Keep")
     data << {
-      "name" => name[0][0..-2].strip, # 先移除最后一个字符, 再 strip
-      "link" => lastLink.split("?")[0]
+      "name" => tr.css("b")[0].text.strip,
+      "link" => tr.css(".applogo a")[0]["href"]
     }
   end
 end
