@@ -22,6 +22,9 @@ doc.css("table")[0].css("tbody tr").each do |tr|
   next unless tr.css("td")[3].text.end_with?("Keep")
 
   if data.class == String
+    # 去掉图片的时间戳
+    img = tr.css("img")[0]
+    img["src"] = img["src"].split("?")[0]
     data += tr.css(".applogo a").to_s + tr.css("b")[0].to_s + "<br>"
   else
     data << {
