@@ -72,7 +72,13 @@ module Watchdog
           end
           CHECK_LOGGER.info "[#{following_id}] Found new."
 
-          # save to tmp file
+          # save to last file
+          if File.exist?(file_name)
+            last_file = file_name + "_last"
+            File.delete(last_file) if File.exist?(last_file)
+            File.rename(file_name, file_name + "_bak")
+          end
+
           File.open(file_name, "w") { |f| f << body}
         end
 
