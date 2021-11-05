@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'json'
 
-json = JSON.parse(open("https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US,CN").read)
+json = JSON.parse(URI.open("https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US,CN").read)
 
 data = []
 json["data"]["Catalog"]["searchStore"]["elements"].each do |element|
@@ -12,7 +12,7 @@ json["data"]["Catalog"]["searchStore"]["elements"].each do |element|
       if promotionalOffer["discountSetting"]["discountPercentage"] == 0
         data << {
           "title" => element["title"],
-          "url" => "https://www.epicgames.com/store/product/" + element["productSlug"],
+          "url" => "https://www.epicgames.com/store/product/#{element["productSlug"]}",
           "startDate" => promotionalOffer["startDate"],
           "endDate" =>  promotionalOffer["endDate"]
         }
