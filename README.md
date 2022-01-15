@@ -17,7 +17,7 @@ IF (网页某区域有变化) THEN (提醒你)
 | epic-free-games  | Epic 每周免费游戏, UTC 时间每周四15点更新                                    | -                |
 | steam-free-games | (失效)Steam 免费游戏, 数据来源 steamdb.info, 依赖 tools/cloudflare-scrape.py | -                |
 | wanwang-price    | 万网域名续费价格监控                                                         | 具体域名的产品ID |
-| xueqiu-fund      | 从雪球(xueqiu.com)的数据源通知最新收益                                       | 编号、本金、份额 |
+| xueqiu-fund      | 基金收益提醒, 数据来源: xueqiu.com                                           | 编号、本金、份额 |
 
 ### CSS Selectors 监控
 
