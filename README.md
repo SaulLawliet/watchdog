@@ -11,12 +11,13 @@ IF (网页某区域有变化) THEN (提醒你)
 文件名以`.rb`结尾, 实现方式是定义一个函数, 函数内容是该脚本, 支持传递配置参数.
 
 已有规则:
-|     fetcher      |     |                                  描述                                  |
-| ---------------- | --- | :--------------------------------------------------------------------- |
-| bilibili-up      |     | B站UP主, 当前粉丝数, 获赞数等                                          |
-| epic-free-games  |     | Epic 每周免费游戏, UTC 时间每周四15点更新                              |
-| steam-free-games |     | Steam 免费游戏, 数据来源 steamdb.info, 依赖 tools/cloudflare-scrape.py |
-| wanwang-price    |     | 万网域名续费价格监控                                                   |
+| fetcher          | 描述                                                                         | 参数             |
+|------------------|:-----------------------------------------------------------------------------|------------------|
+| bilibili-up      | B站UP主, 当前粉丝数, 获赞数等                                                | up主ID           |
+| epic-free-games  | Epic 每周免费游戏, UTC 时间每周四15点更新                                    | -                |
+| steam-free-games | (失效)Steam 免费游戏, 数据来源 steamdb.info, 依赖 tools/cloudflare-scrape.py | -                |
+| wanwang-price    | 万网域名续费价格监控                                                         | 具体域名的产品ID |
+| xueqiu-fund      | 从雪球(xueqiu.com)的数据源通知最新收益                                       | 编号、本金、份额 |
 
 ### CSS Selectors 监控
 
@@ -33,14 +34,14 @@ css_selectors: ".book-img"                      # 抓取的节点
 [SelectorGadget](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb).
 
 已有规则:
-|    fetcher     |     |           描述           |
-| -------------- | --- | :----------------------- |
-| ituring        |     | 图灵社区, 每周特价电子书 |
-| smzdm-fenlei-x |     | 什么值得买, 分类         |
-| smzdm-post-x   |     | 什么值得买, 用户发文     |
-| smzdm-tag-x    |     | 什么值得买, 标签关键字   |
-| smzdm-youhui-x |     | 什么值得买, 商品关键字   |
-| smzdm          |     | 什么值得买, 首页热门     |
+| fetcher        | 描述                     |
+|----------------|:-------------------------|
+| ituring        | 图灵社区, 每周特价电子书 |
+| smzdm          | 什么值得买, 首页热门     |
+| smzdm-fenlei-x | 什么值得买, 分类         |
+| smzdm-post-x   | 什么值得买, 用户发文     |
+| smzdm-tag-x    | 什么值得买, 标签关键字   |
+| smzdm-youhui-x | 什么值得买, 商品关键字   |
 
 ## 修改配置 (config.yaml)
 
