@@ -15,10 +15,12 @@ url = "https://fund.xueqiu.com/dj/open/fund/growth/#{code}?day=30"
 json = JSON.parse(URI.open(url, "User-Agent" => user_agent).read)
 last = json["data"]["fund_nav_growth"].last
 
+now = last['nav'].to_f * share
+
 data = {
   "code" => code,
   "principal" => principal.to_f.round(2),
-  last['date'] => (last['nav'].to_f * share).round(2),
+  last['date'] => "#{now.round(2)} (#{(now -principal).round(2)})",
 }
 
 JSON.pretty_generate(data)
