@@ -11,16 +11,16 @@ principal = options.principal
 share = options.share
 
 user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36"
-url = "https://fund.xueqiu.com/dj/open/fund/growth/#{code}?day=30"
+url = "https://danjuanfunds.com/djapi/fund/nav/history/#{code}?page=1&size=5"
 json = JSON.parse(URI.open(url, "User-Agent" => user_agent).read)
-last = json["data"]["fund_nav_growth"].last
+first = json["data"]["items"].first
 
-now = last['nav'].to_f * share
+now = first['nav'].to_f * share
 
 data = {
   "code" => code,
   "principal" => principal.to_f.round(2),
-  last['date'] => "#{now.round(2)} (#{(now -principal).round(2)})",
+  first['date'] => "#{now.round(2)} (#{(now - principal).round(2)} / #{((now - principal)/now * 100).round(2)}%)",
 }
 
 JSON.pretty_generate(data)
