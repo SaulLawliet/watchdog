@@ -1,3 +1,3 @@
 name: "图灵社区 - 每周特价"
 url: "https://www.ituring.com.cn/tag/36527"
-css_selectors: ".book-img"
+css_selectors: ".special-books"
