@@ -16,12 +16,14 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     mini_mime (1.0.2)
-    mini_portile2 (2.4.0)
-    nokogiri (1.10.9)
-      mini_portile2 (~> 2.4.0)
+    mini_portile2 (2.8.0)
+    nokogiri (1.13.4)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     pony (1.13.1)
       mail (>= 2.0)
     raabro (1.1.6)
+    racc (1.6.0)
     rake (12.3.3)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
@@ -45,7 +47,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  nokogiri (~> 1.10)
+  nokogiri (~> 1.13)
   pony (~> 1.11)
   rake (~> 12.0)
   rspec (~> 3.0)
