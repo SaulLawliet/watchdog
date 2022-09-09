@@ -1,0 +1,3 @@
+name: "轻小说文库 - %s" # 小说名字
+url: "https://www.wenku8.net/modules/article/reader.php?aid=%d" # %d: 小说ID
+css_selectors: ".vcss"
