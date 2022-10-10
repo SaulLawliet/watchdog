@@ -20,7 +20,7 @@ now = first['nav'].to_f * share
 data = {
   "code" => code,
   "principal" => principal.to_f.round(2),
-  first['date'] => "#{now.round(2)} (#{(now - principal).round(2)} / #{((now - principal)/now * 100).round(2)}%)",
+  first['date'] => "#{now.round(2)} (#{(now - principal).round(2)} / #{((now - principal)/principal * 100).round(2)}%)",
 }
 
 JSON.pretty_generate(data)
